@@ -1,0 +1,4 @@
+script -t -f -q 2>/var/log/user_record/$USER-$UID-$(date +%Y%m%d%H%M%S).time -a /var/log/user_record/$USER-$UID-$(date +%Y%m%d%H%M%S).his
+if [ "$SHLVL" = 1 ]; then
+	exit
+fi

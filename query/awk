@@ -1,0 +1,34 @@
+#!/bin/awk
+
+### 内置参数 ###
+ARGC               命令行参数个数
+ARGV               命令行参数排列
+ENVIRON            支持队列中系统环境变量的使用
+FILENAME           awk浏览的文件名
+FNR                浏览文件的记录数
+FS                 设置输入域分隔符，等价于命令行-F选项
+NF                 浏览记录的域的个数
+NR                 已读的记录数
+OFS                输出域分隔符
+ORS                输出记录分隔符
+RS                 控制记录分隔符
+
+### 函数 ###
+length(str)                 返回str中字符的个数
+int(num)                    返回num的整数部分
+index(str1, str2)           返回str2在str1中的索引，如果不存在就返回0
+split(str, arr, separator)  使用separator作为分隔符，将str切分为数组保存到arr中，返回数组的元素个数
+printf(fmt, args)           根据fmt格式化args，并输出结果
+sprintf(fmt, args)          根据fmp格式化args，并返回格式化后的字符串
+substr(str, pos, len)       返回str中从pos开始，长度为len个字符的子字符串
+tolower(str)                返回str转换为小写字母后的副本
+toupper(str)                返回str转换为大写字母后的副本
+
+### examples ###
+awk -F ':' '{print "filename:" FILENAME ",linenumber:" NR ",columns:" NF ",linecontent:"$0}' /etc/passwd
+awk -F: '{printf("filename: %10s,linenumber: %3s,column: %3s,content: %9s\n",FILENAME,NR,NF,$0)}' /etc/passwd
+awk -F ":" '{if(NR<31 && NR>12) print $1}' /etc/passwd
+awk -F: 'BEGIN{print "name,shell"} {print $1,$NF} END{print "hello  world"}' /etc/passwd
+last|awk '{S[$3]++} END{for(a in S){print S[a],a}}'|uniq|sort -rh
+ls -l /tmp|awk '/^d/'
+ls -l|awk '{if($5>1000){count++;sum+=$5}}{print "Count:"count,"Sum:"sum}'
