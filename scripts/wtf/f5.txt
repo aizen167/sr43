@@ -1,0 +1,2 @@
+# 重启syslog服务
+bigstart restart syslog-ng

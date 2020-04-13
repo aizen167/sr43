@@ -1,0 +1,47 @@
+#platform=x86, AMD64, 或 Intel EM64T
+#version=DEVEL
+# Install OS instead of upgrade
+install
+# Keyboard layouts
+keyboard 'us'
+# Root password
+rootpw --iscrypted $1$zk8a.fiW$cD8d0ZMi28eX3kpJMJxcx.
+# Use network installation
+url --url="http://172.18.248.248/yum/rhel/7.6/os/x86_64"
+# System language
+lang zh_CN
+# System authorization information
+auth  --useshadow  --passalgo=sha512
+# Use graphical install
+graphical
+firstboot --disable
+# SELinux configuration
+selinux --disabled
+
+# Firewall configuration
+firewall --disabled
+# Reboot after installation
+reboot
+# System timezone
+timezone Asia/Shanghai
+# System bootloader configuration
+bootloader --location=mbr
+# Clear the Master Boot Record
+zerombr
+# Partition clearing information
+clearpart --linux --initlabel
+# Disk partitioning information
+part /boot --fstype="xfs" --ondisk=sda --size=1024
+part pv.156 --fstype="lvmpv" --grow --ondisk=sda
+volgroup rhel --pesize=4096 pv.156
+logvol swap  --fstype="swap" --size=8192 --name=swap --vgname=rhel
+logvol /  --fstype="xfs" --size=30720 --name=root --vgname=rhel
+
+%packages
+@base
+@core
+%end
+
+%post
+curl -s http://172.18.248.248/rc/scripts/shell/cfgbase.sh|bash -s -- --base --zbx
+%end

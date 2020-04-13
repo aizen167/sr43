@@ -1,0 +1,355 @@
+#!/bin/sh
+### 脚本第一行总是以 #!/bin/sh 开头,它通知系统以下的shell程序使用系统上的Bourne Shell来解释
+
+## 文件类型
+### - 普通文件
+### b block 块设备文件
+### c character 字符设备文件
+### d directory 目录
+### l link 链接文件
+### p pipe 命名管道文件
+### s socket 本地套接口
+
+### wildcard 通配符
+### regular expression 正则表达式
+### PS1 shell prompt
+### su substitute user
+### pwd present working directorys
+### cat concatenate
+### ln link
+
+## 获取帮助
+#man -k keyword
+### 浏览器形式查看详细GNU信息
+#pinfo command
+#firefox file:///usr/share/doc
+
+## 快捷键
+### ctrl+u 清空至行首
+### ctrl+k 清空至行尾
+
+## 命令执行方式
+### nohup command & 后台执行
+### 1>file1 2>&1 stderr和stdout输出到同一文件,1可省
+
+#crontab
+### 格式 *  *  *  *  * command
+###      分 时 日 月 周
+
+#permission权限 
+### --目录 directory
+### 读权限 可查看目录下的内容
+### 写权限 可在目录下新增、删除内容
+### 执行权限 可进入该目录并可搜索该目录
+### 目录具有读权限但无执行权限，能查看目录下的文件名，但无法查看文件属主、时间戳等具体信息
+### 目录具有读权限和执行权限，才能对该目录执行find命令
+
+## 新建文件
+### >file 或 touch file 或 vi file
+
+## 查看文件内容
+### cat file 一次全部显示文件内容
+### more file 分屏显示文件内容 more -n 每页显示n行
+### less file 分屏显示文件内容
+### head -n file-list 分别显示各个文件前n行
+### tail -n file-list 分别显示各个文件后n行
+### tail -f files
+
+## 压缩打包文件
+### compress uncompress
+### gzip压缩 gzip -d或gunzip解压
+### tar -cvf 打包 -tvf 查看压缩包内容 -xvf 解包
+
+#history
+function cfgHIS () {
+  export HISTIMEFORMAT='%F %t '
+  export HISTSIZE=100
+  export HISTFILE=/root/.commandline_warrior
+  export HISTCONTROL=ignoredups
+  export HISTFILESIZE=200
+  ### 清理历史记录（只是清理了表层，可在.bash_profile找到）
+  #history -c
+}
+
+#cat
+### cat [options] file-list
+### -n 显示时每行显示行号
+### -E 每行结尾显示$
+
+#chown
+### -R(recursive) 递归到子目录
+### chown -R user:group file
+
+#cp
+### cp [options] file1 file2
+### file1需有读权限，复制后file2属主为执行cp命令的用户
+### 如果file2为目录，复制file1为file2目录下同名文件
+### -i 如果目标文件存在，提示是否覆盖
+### -p 复制时保留原文件的权限设置和修改时间
+### -r/R recursive 递归 用于目录复制
+
+#date
+function useDate () {
+  date -d next-day +%Y%m%d
+  date -d tomorrow +%Y%m%d
+  date -d last-day +%Y%m%d
+  date -d yesterday +%Y%m%d
+  date -d last-month +%Y%m%d
+  date -d next-year +%Y%m%d
+  date -d'next monday'
+  date -d'100 days'
+  date -d'100 days ago'
+  date -d'-50 days'
+  date -d'dec 14 -2 weeks'
+}
+##useDate 
+
+#du
+### 显示目录和文件所使用的硬盘块的数量
+### -a 以block为单位显示指定目录的结构
+##du -a /tmp
+
+#file
+### 查看文件类型
+
+#find
+### 查找文件位置
+### find path expression
+### expression:
+### -name 指定要查找的文件或目录名称
+### -size n 查找占用n个block的文件
+### find . -size +100k 在当前目录查找大于100k的文件
+### find . -size -100c 在当前目录查找小于100字节的文件
+### -type t 查找文件类型为t的文件
+### -user user 查找属于用户user的文件，user可为用户名或uid
+### -group group 查找组为group的文件，group可为组名或gid
+### -links n 查找链接数为n的文件
+### -atime n 查找n天之前曾被存取的文件
+### -mtime n 查找n天之前曾被移动的文件
+### -maxdepth n 指定遍历搜索的最大深度
+### -mindepth n 查找深度距离查找目录至少n个子目录的文件
+### -print 将符合条件的路径打印出来
+### -exec command \;
+### eg: find . -name shit -exec rm {} \; --{}用于表示文件名，即find命令过滤出来的文件
+
+#grep
+### -i 忽略大小写
+### -c 打印匹配的行数
+### -l 从多个文件中查找包含匹配项
+### -v 查找不包含匹配项的行
+### -n 打印包含匹配项的行和行标
+### cat file|grep -v ^$|grep -v ^# 删掉文件中的空行和以#开头的注释行
+
+#history
+### 查看历史命令
+### history -c 清空历史
+
+#id
+### 查看用户属性(uid,gid,groups)
+
+#ln
+### ln [options] sourceFile targetFile
+### ln -s sourceFile targetFile 符号链接
+### ln sourceFile targetFile 硬链接
+
+#ls
+### -S 按文件大小排序 ls -lS
+
+#rm
+### rm [options] file-list
+### -f force 强制删除
+### -i 删除之前提示用户确认
+### -r/R 删除目录
+
+#rmdir
+### remove empty directories
+### rmdir dir-list
+
+#split
+### 切割文件
+### -b 指定多少字节切成一个小文件 支持单位：m,k
+### -C 与-b类似，切割时尽量保持每行的完整性
+### -l 按行切割
+### eg:split -b 100m file new_file_prefix
+
+#tr
+### -d 删除字符串中所有输入字符
+### -s 删除所有重复出现字符序列，只保留第一个；即将重复出现字符串压缩为一个字符
+### 统一字母大小写 cat file|tr [a-z] [A-Z]>new_file
+### 删除换行制表 cat file|tr -d "\n\t">new_file
+### 转义字符、八进制、含义对应关系
+### \b \010 退格符
+### \n \012 换行符
+### \r \015 回车符
+### \t \011 tab键
+
+#useradd
+### 增加新用户
+### -c 表示注释
+### -d 表示home目录
+### -m 表示home目录不存在，则自动创建
+### -g 表示属于哪个组
+### -s 表示使用哪个shell
+### useradd -c "Test User" -d /home/wd -m -g wd -s /bin/bash wd
+
+#userdel
+### 删除用户
+### userdel wd
+
+#w
+### 查看某一时刻用户的行为
+
+#wc
+### wc [options] file-list
+### -c 统计字符数
+### -w 统计单词数
+### -l 统计行数
+
+#who
+### -a 显示所有用户的所有信息
+### -H 显示列标题
+
+#read
+function useRead () {
+  echo -n "input your name:"
+  read Name
+  echo "hello,$Name"
+}
+
+#cut
+### -d: 以:进行分割 -f2 取第二个字段
+echo "a:b:c:d"|cut -d: -f2
+
+#/dev/null
+### 是一个虚拟的设备,俗称"Linux黑洞",任何对/dev/null的写入都会成功，但数据会消失的无影无踪，没有任何反馈。
+### 所以经常把不想在屏幕显示的信息全部发送到/dev/null中，shell脚本中常用
+ls -l >/dev/null
+### 清空文件内容
+#cat /dev/null >FileName
+
+#parameter
+### 本地变量：用户自定义的变量
+### 环境变量：用于所有用户变量，用于用户进程前，必须用export命令导出
+### 位置变量：$0:脚本名，$1-$9；脚本参数
+### 特定变量：
+### $# 传递到脚本的参数个数
+### $* 传递到脚本的参数，此选项参数可超过9个
+### $$ 脚本运行时当前进程ID号，常用作临时变量的后缀，如var.$$
+### $! 后台运行(&)最后一个进程的ID号
+### $@ 与$*相同，使用时加引号，并在引号中返回参数个数
+### $- 上一个命令的最后一个参数
+### $? 最后命令的退出状态，0表示没有错误，其他任何值表明有错误
+echo "hello $USER, the output are as follows:"
+echo "the shell name is:$0"
+echo "the first var is:$1"
+echo "the second var is:$2"
+echo "the tenth var is:${10}"
+echo "all var is:$*"
+echo "all var is:$@"
+echo "the number of var is:$#"
+echo "the process ID for this shell is $$"
+echo "the exit status of this shell is $?"
+
+### 条件测试：
+### 算术比较
+### expression1 –eq expression2 #如果两个表达式相等，则结果为真
+### expression1 –ne expression2 #如果两个表达式不等，则结果为真
+### expression1 –gt expression2 #如果前一个表达式大于后一个表达式，则结果为真
+### expression1 –ge expression2 #如果前一个表达式大于或等于后一个表达式，则结果为真
+### expression1 –lt expression2 #如果前一个表达式小于后一个表达式，则结果为真
+### expression1 –le expression2 #如果前一个表达式小于或等于后一个表达式，则结果为真
+### ! expression #取表达式的非，即表达式为假，则结果为真
+### expression1 -a expression2 若两个表达式都为真则整式为真
+### expression1 -o expression2 若两个表达式有一个为真则整式为真
+### -z string 若string长度为0，则为真
+### -n string 若string长度不为0，则为真
+### string1 = string2 若两个字符串相等，则为真
+### string1 != string2 若两个字符串不相等，则为真
+### 文件测试：
+### -b file 若文件存在且是一个块特殊文件，则为真
+### -c file 若文件存在且是一个字符特殊文件，则为真
+### -d file 若文件存在且是一个目录，则为真
+### -e file 若文件存在，则为真
+### -f file 若文件存在且是一个常规文件，则为真
+### -g file 若文件存在且设置了SGID位的值，则为真
+### -h/-L file 若文件存在且为一个符合链接，则为真
+### -k file 若文件存在且设置了"sticky"位的值
+### -p file 若文件存在且为一已命名管道，则为真
+### -r file 若文件存在且可读，则为真
+### -s file 若文件存在且其大小大于零，则为真
+### -u file 若文件存在且设置了SUID位，则为真
+### -w file 若文件存在且可写，则为真
+### -x file 若文件存在且可执行，则为真
+### -o file 若文件存在且被有效用户ID所拥有，则为真
+### = != 用于字符串比较  eq gt等用于数值测试
+
+#wtf
+wtf=$(type wtf>/dev/null 2>&1||{ echo >&2 "wtf" ; })
+echo ${wtf}
+
+#if
+function useIf () {
+  if [ -z "$P" ];then
+  ### then需换行或if后;then
+    P=`who am i`
+  elif [[ ${P} =~ "hello" ]] ### 字符匹配
+  then
+    echo ${P}>/dev/null 2>&1
+  fi
+}
+
+#case
+function useCase () {
+  case $P in
+    root) PS1="!#";;
+    *) PS1="hello";; ### 以双分号(;;)结尾
+  esac;
+}
+
+echo ${#param} ### 获取$param的长度
+
+function chkCPU () {
+  release1=$(lsb_release -r 2>/dev/null|cut -d: -f2|awk '{gsub(/ /,"")}')
+  release2=$(cat /etc/redhat-release|awk '{print $7}')
+  ### 如果release1不为空，release=release1，否则release=release2
+  release=${release1:-${release2}}
+  if [ -d /var/log/sa ];then
+    ### 截取release变量从0位开始1个长度
+    case ${release:0:1} in
+    5)
+      cpu=$(find /var/log/sa/ -name sar* -mtime -6|xargs sed -n "/CPU/,/Average/p"|grep Average|grep all|\
+           awk 'BEGIN {min=100} {if($8<min)min=$8} END {printf "%.2f\n", 100-min}')
+      ;;
+    *)
+      cpu=$(find /var/log/sa/ -name sar* -mtime -6|xargs sed -n "/CPU/,/Average/p"|grep Average|\
+           awk 'BEGIN {min=100} {if($11<min)min=$11} END {printf "%.2f\n", 100-min}')
+      ;;
+    esac
+  else
+    cpu=$(vmstat 1 20|sed '1,3d'|awk 'BEGIN {count=0;sum=0;} {count++; sum+=$15} END {printf "%.2f", 100-sum/count}')
+  fi
+  echo "${cpu}%"
+}
+
+function chkUser () {
+  local users="adm,lp,mail,uucp,operator,games,gopher,ftp,nobody,nobody4,noaccess,\
+  listen,webservd,rpm,dbus,avahi,mailnull,smmsp,nscd,vcsa,rpc,rpcuser,nfs,sshd,\
+  pcap,ntp,haldaemon,distcache,apache,webalizer,squid,xfs,gdm,sabayon,named"
+  for i in $(IFS=",";echo ${users})
+  do
+    grep -w $i /etc/passwd|grep -v /sbin/nologin && \
+    grep $i /etc/shadow|awk -F: '($2 !~ "!") {printf $1" "}'
+  done
+}
+
+function chkPort () {
+  netstat -ntpl|egrep "23\b"
+}
+
+function chkFile () {
+  ### stat -c %a file 获取文件权限
+  for i in /etc/shadow
+  do
+    if [ -e $i ] && [ $(stat -c %a $i) -gt 400 ];then echo $i;fi
+  done
+}
