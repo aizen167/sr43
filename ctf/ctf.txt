@@ -1,0 +1,6 @@
+### 分解gif图片
+convert input.gif output.png
+### 合并图片
+montage input*.png -tile x1 -geometry +0+0 output.png
+-tile x1 一行
+-geometry 首选每个图和边框尺寸
