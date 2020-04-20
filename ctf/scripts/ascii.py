@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
@@ -13,5 +13,5 @@ flag = ''
     #flag += chr(i)
 for i in range(0,len(str),2):
     s = "0x" + str[i] + str[i+1]
-    flag += chr(int(s, 16) -128)
+    flag += chr(int(s, 16) -0)
 print(flag)
