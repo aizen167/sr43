@@ -1,0 +1,7 @@
+sysname===人民币跨境支付
+author===武夺
+level1===二级
+level2===一级
+rto===RTO<=24小时
+rpo===RPO<=4小时
+summary===人民币跨境支付系统由一台跨境支付MQ主机（192.1.7.123）组成
