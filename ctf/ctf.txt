@@ -1,6 +1,14 @@
 ### 分解gif图片
 convert input.gif output.png
+### rotate 90 旋转90°
+convert -flip -rotate 90 convert_file.txt flag.png
 ### 合并图片
 montage input*.png -tile x1 -geometry +0+0 output.png
 -tile x1 一行
 -geometry 首选每个图和边框尺寸
+### 破解zip
+fcrackzip -u -l 1-6 -c 'a1' input.zip
+-u	压缩文件名
+-b	暴力破解模式
+-c	指定掩码类型(a=a-z;1=0-9;!=特殊字符)
+-l	密码长度

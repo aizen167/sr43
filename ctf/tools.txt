@@ -1,2 +1,4 @@
 ### 盲水印解密
 git clone git@github.com:chishaxie/BlindWaterMark.git
+### pyc隐写
+git clone git@github.com:AngelKitty/stegosaurus.git
