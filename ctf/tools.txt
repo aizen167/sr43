@@ -1,4 +1,12 @@
+### stegdetect
+git clone git@github.com:abeluck/stegdetect.git
 ### 盲水印解密
 git clone git@github.com:chishaxie/BlindWaterMark.git
 ### pyc隐写
 git clone git@github.com:AngelKitty/stegosaurus.git
+### pyc反编译
+git clone git@github.com:wibiti/uncompyle2.git
+### 靶场
+git clone https://github.com/fofapro/vulfocus
+### poemcode
+git clone git@github.com:abpolym/crypto-tools.git

@@ -2,6 +2,8 @@
 convert input.gif output.png
 ### rotate 90 旋转90°
 convert -flip -rotate 90 convert_file.txt flag.png
+### 水平旋转
+convert -flop input output
 ### 合并图片
 montage input*.png -tile x1 -geometry +0+0 output.png
 -tile x1 一行
@@ -12,3 +14,19 @@ fcrackzip -u -l 1-6 -c 'a1' input.zip
 -b	暴力破解模式
 -c	指定掩码类型(a=a-z;1=0-9;!=特殊字符)
 -l	密码长度
+### outguess隐写
+outguess -r input.jpg output
+### 16进制文件
+xxd -p hexfile|tr -d '\n'|rev|xxd -r -p binfile
+rev 从最后一个字符显示到第一个字符
+xxd -r 把十六进制输出内容转换回原文件的二进制内容
+
+RsaCtfTool
+### 已知公钥和密文
+python RsaCtfTool.py --publickey 公钥文件 --uncipherfile 加密的文件
+## 已知公钥求私钥
+RsaCtfTool.py --publickey 公钥文件 --private
+### 密钥格式转换 把PEM格式的公钥转换为n，e
+python RsaCtfTool.py --dumpkey --key 公钥文件
+### 密钥格式转换 把n,e转换为PEM格式
+python RsaCtfTool.py --createpub -n 782837482376192871287312987398172312837182 -e 65537
