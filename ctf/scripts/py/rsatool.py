@@ -79,10 +79,7 @@ def low_e_broadcast():
         msg = session['c']
         data += [(msg, n)]
     x, n = chinese_remainder_theorem(data)
-    print x
-    e = session['e']
-    #realnum = gmpy2.mpz(x).iroot(e)[0].digits()
-    realnum = gmpy2.iroot(x, 10)
+    realnum = gmpy2.iroot(x, len(data))
     print libnum.n2s(realnum[0])
 
 

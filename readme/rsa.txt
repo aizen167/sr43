@@ -1,0 +1,11 @@
+### openssl
+openssl rsautl -encrypt -in flag -inkey public.pem -pubin -out flag.enc
+rsautl		加解密
+-encrypt	加密
+-in			从文件输入
+flag		文件名
+-inkey		输入的密钥
+public.pem	公钥文件
+-pubin		输入是公钥文件
+-out		输出到文件
+openssl rsa -pubin -text -modulus -in warmup -in public.pem
